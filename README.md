@@ -1,4 +1,5 @@
 # Bottom drawer for React Native
+The original motivation behind this project was to try to mimic the bottom drawer component on the Google Maps app. 
 
 <p align="center">
   <img src="https://github.com/jacklein/rn-bottom-drawer/blob/master/demo.gif" alt="Demo" width="300" />
@@ -63,10 +64,10 @@ const styles = StyleSheet.create({
 
 | prop | type | default | description |
 | ---- | ---- | ----| ---- |
-| renderContent | function | () => {} | A callback function that returns the content that goes inside the drawer |
-| containerHeight | number | 0 | The height of your parent View. This is used to calculate the drawer's position. You must also declare the same height within the parent View's style | 
-| offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so the drawer renders correctly within the map view |
-| startingPosition | string | 'up' | Either 'up' or 'down', the starting position for the drawer |
+| renderContent | function | () => {} | A callback function that returns the content that goes inside the drawer. |
+| containerHeight | number | 0 | The height of your parent View. This is used to calculate the drawer's position. You must also declare the same height within the parent View's style. | 
+| offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so that the drawer renders correctly within the map view. |
+| startingPosition | string | 'up' | Either 'up' or 'down', the starting position for the drawer. |
 
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
