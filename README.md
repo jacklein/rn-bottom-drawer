@@ -1,5 +1,4 @@
 # Bottom drawer for React Native
-The original motivation behind this project was to try to mimic the bottom drawer component on the Google Maps app. 
 
 <p align="center">
   <img src="https://github.com/jacklein/rn-bottom-drawer/blob/master/demo.gif" alt="Demo" width="300" />
