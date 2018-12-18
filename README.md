@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 
 | prop | type | default | description |
 | ---- | ---- | ----| ---- |
-| renderContent | function | () => <View /> | A callback function that returns the content that goes inside the drawer |
+| renderContent | function | () => {} | A callback function that returns the content that goes inside the drawer |
 | containerHeight | number | 0 | The height of your parent View. This is used to calculate the drawer's position. You must also declare the same height within the parent View's style | 
 | offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so the drawer renders correctly within the map view |
 | startingPosition | string | 'up' | Either 'up' or 'down', the starting position for the drawer |
