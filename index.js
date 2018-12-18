@@ -17,7 +17,8 @@ class BottomDrawer extends Component{
     // config variables
     this.CONTAINER_HEIGHT = this.props.containerHeight;
     this.TOGGLE_UP = { x: 0, y: SCREEN_HEIGHT - (this.CONTAINER_HEIGHT + this.props.offset) };
-    this.TOGGLE_DOWN = { x: 0, y: this.TOGGLE_UP.y + this.CONTAINER_HEIGHT / 1.5 }
+    const DOWN_DISPLAY = this.props.downDisplay || (this.CONTAINER_HEIGHT / 1.5);
+    this.TOGGLE_DOWN = { x: 0, y: this.TOGGLE_UP.y + DOWN_DISPLAY };
     this.TOGGLE_THRESHOLD = this.CONTAINER_HEIGHT / 11;
 
     this.state = { currentToggle: this.props.startingPosition === 'up' ? this.TOGGLE_UP : this.TOGGLE_DOWN };
@@ -84,7 +85,8 @@ BottomDrawer.propTypes = {
   renderContent: PropTypes.func,
   containerHeight: PropTypes.number,
   offset: PropTypes.number,
-  startingPosition: PropTypes.string
+  startingPosition: PropTypes.string,
+  downDisplay: PropTypes.number
 };
 
 const styles = {
