@@ -1,0 +1,31 @@
+{
+  "name": "rn-bottom-drawer",
+  "version": "1.0.0",
+  "description": "a bottom drawer component for react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacklein/rn-bottom-drawer.git"
+  },
+  "keywords": [
+    "react-native",
+    "drawer"
+  ],
+  "author": "Jack K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacklein/rn-bottom-drawer/issues"
+  },
+  "homepage": "https://github.com/jacklein/rn-bottom-drawer#readme",
+  "dependencies": {
+    "prop-types": "^15.6.2"
+  },
+  "devDependencies": {
+    "metro-react-native-babel-preset": "^0.51.0",
+    "react": "^16.6.3",
+    "react-native": "^0.57.8"
+  }
+}
