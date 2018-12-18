@@ -33,7 +33,7 @@ export default class App extends React.Component {
   renderContent = () => {
     return (
       <View style={styles.contentContainer}>
-        <Text style={styles.text}>Get directions to your location</Text>
+        <Text>Get directions to your location</Text>
       </View>
     )
   }
