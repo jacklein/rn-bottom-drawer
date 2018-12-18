@@ -26,6 +26,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import BottomDrawer from 'rn-bottom-drawer';
 
+const CONTAINER_HEIGHT = 100;
 const TAB_BAR_HEIGHT = 49;
 
 export default class App extends React.Component {
@@ -41,7 +42,7 @@ export default class App extends React.Component {
     return (
       <BottomDrawer
         renderContent={this.renderContent}
-        containerHeight={100}
+        containerHeight={CONTAINER_HEIGHT}
         offset={TAB_BAR_HEIGHT}
         startingPosition='up'
       />
@@ -52,7 +53,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    height: 100,
+    height: CONTAINER_HEIGHT,
     backgroundColor: 'white',
   }
 });
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
 | containerHeight | number | 0 | The height of your parent View. This is used to calculate the drawer's position. You must also declare the same height within the parent View's style. | 
 | offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so the drawer renders correctly within the map view. |
 | startingPosition | ['up', 'down'] | 'up' | The starting position for the drawer |
-| downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value seems to look pretty good. |
+| downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value shows 1/3 of the container (if containerHeight = 60, the default downDisplay value = **40**). |
 
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
