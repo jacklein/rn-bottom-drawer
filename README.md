@@ -1,7 +1,7 @@
 # Bottom drawer for React Native
 
 <p align="center">
-  <img src="https://github.com/jacklein/rn-bottom-drawer/blob/master/demo.gif" alt="Demo" width="300" />
+  <img src="demo.gif" alt="Demo gif" width="300" />
 </p>
 
 ## Content
