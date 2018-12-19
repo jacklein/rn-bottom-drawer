@@ -27,7 +27,6 @@ export default class App extends React.Component {
         renderContent={this.renderContent}
         containerHeight={CONTAINER_HEIGHT}
         offset={TAB_BAR_HEIGHT + HEADER_HEIGHT}
-        startingPosition='up'
       />
     )
   }
