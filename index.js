@@ -15,28 +15,37 @@ class BottomDrawer extends Component{
     super(props);
 
     // config variables
-    this.CONTAINER_HEIGHT = this.props.containerHeight;
-    this.TOGGLE_UP = { x: 0, y: SCREEN_HEIGHT - (this.CONTAINER_HEIGHT + this.props.offset) };
-    const DOWN_DISPLAY = this.props.downDisplay || (this.CONTAINER_HEIGHT / 1.5);
-    this.TOGGLE_DOWN = { x: 0, y: this.TOGGLE_UP.y + DOWN_DISPLAY };
-    this.TOGGLE_THRESHOLD = this.CONTAINER_HEIGHT / 11;
+    this.TOGGLE_THRESHOLD = this.props.containerHeight / 11;
+    this.UP_POSITION = { 
+      x: 0, 
+      y: SCREEN_HEIGHT - (this.props.containerHeight + this.props.offset) 
+    };
+    this.DOWN_POSITION = { 
+      x: 0,
+      y: this.UP_POSITION.y + (this.props.downDisplay || (this.props.containerHeight / 1.5)) 
+    };
 
-    this.state = { currentToggle: this.props.startingPosition === 'up' ? this.TOGGLE_UP : this.TOGGLE_DOWN };
+    this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION };
 
-    this.position = new Animated.ValueXY(this.state.currentToggle);
+    this.position = new Animated.ValueXY(this.state.currentPosition);
 
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gesture) => {
-        if (this.restrictSwipe(gesture)) {
-          this.position.setValue({ y: this.state.currentToggle.y + gesture.dy });
+        if (this.swipeInBounds(gesture)) {
+          this.position.setValue({ y: this.state.currentPosition.y + gesture.dy });
+        } else {
+          // user swiping up more than the drawer's height
+          // ease lightly up
+          this.position.setValue({ y: this.UP_POSITION.y - this.calculateEase(gesture) });
         }
       },
       onPanResponderRelease: (event, gesture) => {
-        if (gesture.dy > this.TOGGLE_THRESHOLD && this.state.currentToggle === this.TOGGLE_UP) {
-          this.toggle(this.TOGGLE_DOWN);
-        } else if (gesture.dy < -this.TOGGLE_THRESHOLD && this.state.currentToggle === this.TOGGLE_DOWN) {
-          this.toggle(this.TOGGLE_UP);
+        const { currentPosition } = this.state;
+        if (gesture.dy > this.TOGGLE_THRESHOLD && currentPosition === this.UP_POSITION) {
+          this.transitionTo(this.DOWN_POSITION);
+        } else if (gesture.dy < -this.TOGGLE_THRESHOLD && currentPosition === this.DOWN_POSITION) {
+          this.transitionTo(this.UP_POSITION);
         } else {
           this.resetPosition();
         }
@@ -44,22 +53,27 @@ class BottomDrawer extends Component{
     });
   }
 
-  // can't drag content up more than its height
-  restrictSwipe(gesture) {
-    return (this.state.currentToggle.y + gesture.dy) > (SCREEN_HEIGHT - (this.CONTAINER_HEIGHT + this.props.offset));
+  // returns true if the swipe is within the height of the drawer
+  swipeInBounds(gesture) {
+    return this.state.currentPosition.y + gesture.dy > this.UP_POSITION.y;
   }
 
-  toggle(direction) {
+  // user can only swipe up so far before ease stops
+  calculateEase(gesture) {
+    return Math.min(Math.sqrt(gesture.dy * -1), Math.sqrt(SCREEN_HEIGHT));
+  }
+
+  transitionTo(position) {
     Animated.spring(this.position, {
-      toValue: direction
-    }).start()
-    this.setState({ currentToggle: direction })
+      toValue: position
+    }).start();
+    this.setState({ currentPosition: position });
   }
 
   resetPosition() {
     Animated.spring(this.position, {
-      toValue: this.state.currentToggle
-    }).start()
+      toValue: this.state.currentPosition
+    }).start();
   }
 
   render() {
@@ -69,6 +83,10 @@ class BottomDrawer extends Component{
         {...this._panResponder.panHandlers}
       >
         {this.props.renderContent()}
+
+        <View 
+          style={[styles.bottomPadding, { backgroundColor: this.props.backgroundColor}]}
+        />
       </Animated.View>
     )
   }
@@ -78,28 +96,30 @@ BottomDrawer.defaultProps = {
   renderContent: () => <View/>,
   containerHeight: 0,
   offset: 0,
-  startingPosition: 'yes'
+  startUp: true,
+  backgroundColor: 'white'
 };
 
 BottomDrawer.propTypes = {
   renderContent: PropTypes.func,
   containerHeight: PropTypes.number,
   offset: PropTypes.number,
-  startingPosition: PropTypes.string,
-  downDisplay: PropTypes.number
+  startUp: PropTypes.bool,
+  downDisplay: PropTypes.number,
+  backgroundColor: PropTypes.string
 };
 
 const styles = {
   animationContainer: {
     width: SCREEN_WIDTH,
     position: 'absolute',
-    left: 0,
-    right: 0,
     shadowColor: '#CECDCD',
     shadowRadius: 3,
     shadowOpacity: 5,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+  },
+  bottomPadding: {
+    height: Math.sqrt(SCREEN_HEIGHT) + 1,
+    marginTop: -1
   }
 }
 
