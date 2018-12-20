@@ -44,8 +44,6 @@ export default class App extends React.Component {
         renderContent={this.renderContent}
         containerHeight={CONTAINER_HEIGHT}
         offset={TAB_BAR_HEIGHT}
-        startUp
-        backgroundColor='white'
       />
     )
   }
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     height: CONTAINER_HEIGHT,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
   }
 });
 
@@ -63,14 +61,14 @@ const styles = StyleSheet.create({
 
 ## Configuration
 
-| prop | type | default | description |
+| Prop | Type | Default | Description |
 | ---- | ---- | ----| ---- |
-| renderContent | function | () => {} | A callback function that returns the content that goes inside the drawer. |
+| renderContent | function | () => {} | A callback that returns the content that goes inside the drawer. |
 | containerHeight | number | 0 | The height of your parent View. This is used to calculate the drawer's position. You must also declare the same height within the parent View's style. | 
-| offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so the drawer renders correctly within the map view. |
-| startUp | boolean | true | If **true**, the drawer will start in up position, and if **false** it will start in down position |
-| downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value shows 1/3 of the container (if containerHeight = 60, the default downDisplay value = **40**). |
-| backgroundColor | string | 'white' | The background color of your parent View. You must also declare the same background color within the parent View's style. This prop is used for bottom padding. |
+| offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so that the drawer renders correctly within the map view. |
+| startUp | bool | true | If **true**, the drawer will start in up position. If **false** it will start in down position. |
+| downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value shows 1/3 of the container (if containerHeight = 60, the default downDisplay value = 40). |
+| backgroundColor | string | '#ffffff' | The background color of your parent View. You must also declare the same background color within the parent View's style. This prop is used for bottom padding. |
 
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)

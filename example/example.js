@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     height: CONTAINER_HEIGHT,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
   },
   buttonContainer: {
     flexDirection: 'row',
