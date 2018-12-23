@@ -24,7 +24,7 @@ npm install rn-bottom-drawer --save
 
 ```javascript
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import BottomDrawer from 'rn-bottom-drawer';
 
 const TAB_BAR_HEIGHT = 49;
@@ -56,7 +56,7 @@ export default class App extends React.Component {
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ----| ---- |
-| containerHeight | number | -- | The height of the drawer | 
+| containerHeight | number | -- | The height of the drawer. | 
 | offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so that the drawer renders correctly within the map view. |
 | downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value shows 1/3 of the container (if containerHeight = 60, the default downDisplay value = 40). |
 | backgroundColor | string | '#ffffff' | The background color of the drawer. |
