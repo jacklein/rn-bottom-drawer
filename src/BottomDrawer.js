@@ -14,15 +14,9 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 export default class BottomDrawer extends Component{
   static propTypes = {
     /**
-     * User defined callback that returns the content that goes in the drawer.
-     */
-    renderContent: PropTypes.func,
-
-    /**
      * Height of the drawer. 
-     * Should be the same height as the content inside.
      */
-    containerHeight: PropTypes.number,
+    containerHeight: PropTypes.number.isRequired,
 
     /**
      * The amount of offset to apply to the drawer's position.
@@ -43,18 +37,27 @@ export default class BottomDrawer extends Component{
     downDisplay: PropTypes.number,
 
     /**
-     * The color of the drawer's bottom padding.
-     * Should be the same color as the background color of the content inside. 
+     * The background color of the drawer.
      */
-    backgroundColor: PropTypes.string
+    backgroundColor: PropTypes.string,
+
+    /**
+     * Set to true to give the top of the drawer rounded edges.
+     */
+    roundedEdges: PropTypes.bool,
+
+    /**
+     * Set to true to give the drawer a shadow.
+     */
+    shadow: PropTypes.bool,
   }
 
   static defaultProps = {
-    renderContent: () => <View/>,
-    containerHeight: 0,
     offset: 0,
     startUp: true,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    roundedEdges: true,
+    shadow: true,
   }
 
   constructor(props){
@@ -91,14 +94,22 @@ export default class BottomDrawer extends Component{
     });
   }
 
-  render() {
+  render() {   
     return (
       <Animated.View 
-        style={[styles.animationContainer, this.position.getLayout()]}
+        style={[
+          this.position.getLayout(),
+          styles.animationContainer,
+          this.props.roundedEdges ? styles.roundedEdges : null,
+          this.props.shadow ? styles.shadow : null,
+          { height: this.props.containerHeight + Math.sqrt(SCREEN_HEIGHT),
+            backgroundColor: this.props.backgroundColor }
+        ]}
         {...this._panResponder.panHandlers}
       >
-        {this.props.renderContent()}
-        <View style={[styles.bottomPadding, { backgroundColor: this.props.backgroundColor}]} />
+        {this.props.children}
+
+        <View style={{height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor}} />
       </Animated.View>
     )
   }
