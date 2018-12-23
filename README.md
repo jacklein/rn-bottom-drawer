@@ -58,11 +58,11 @@ export default class App extends React.Component {
 | ---- | ---- | ----| ---- |
 | containerHeight | number | -- | The height of the drawer | 
 | offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so that the drawer renders correctly within the map view. |
-| startUp | bool | true | If **true**, the drawer will start in up position. If **false**, it will start in down position. |
 | downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value shows 1/3 of the container (if containerHeight = 60, the default downDisplay value = 40). |
 | backgroundColor | string | '#ffffff' | The background color of the drawer. |
+| startUp | bool | true | If **true**, the drawer will start in up position. If **false**, it will start in down position. |
 | roundedEdges | bool | true | If **true**, the top of the drawer will have rounded edges. |
-| shadow | string | true | if **true**, the top of the drawer will have a shadow. |
+| shadow | bool | true | if **true**, the top of the drawer will have a shadow. |
 
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
