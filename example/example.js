@@ -3,8 +3,7 @@ import { View, Text,StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import BottomDrawer from 'rn-bottom-drawer';
 
-const CONTAINER_HEIGHT = 120;
-// this example assumes you're using tab navigation and a header
+// this example assumes you're using a header and a tab bar
 const TAB_BAR_HEIGHT = 49;
 const HEADER_HEIGHT = 60;
 
@@ -24,22 +23,20 @@ export default class App extends React.Component {
   render() {
     return (
       <BottomDrawer
-        renderContent={this.renderContent}
-        containerHeight={CONTAINER_HEIGHT}
+        containerHeight={100}
         offset={TAB_BAR_HEIGHT + HEADER_HEIGHT}
-      />
+      >
+        {this.renderContent()}
+      </BottomDrawer>
     )
   }
 }
 
 const styles = StyleSheet.create({
   contentContainer: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
-    height: CONTAINER_HEIGHT,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    backgroundColor: '#ffffff',
+    justifyContent: 'space-around'
   },
   buttonContainer: {
     flexDirection: 'row',
