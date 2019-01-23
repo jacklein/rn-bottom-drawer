@@ -45,7 +45,7 @@ export default class App extends React.Component {
         offset={TAB_BAR_HEIGHT}
       >
         {this.renderContent()}
-      <BottomDrawer />
+      </BottomDrawer>
     )
   }
 }
