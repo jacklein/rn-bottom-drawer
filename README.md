@@ -60,6 +60,7 @@ export default class App extends React.Component {
 | offset | number | 0 | If your app uses tab navigation or a header, **offset** equals their combined heights. In the demo gif, the offset is the header + tab heights so that the drawer renders correctly within the map view. |
 | downDisplay | number | containerHeight / 1.5 | When the drawer is swiped into down position, **downDisplay** controls how far it settles below its up position. For example, if its value is 20, the drawer will settle 20 points below the up position. The default value shows 1/3 of the container (if containerHeight = 60, the default downDisplay value = 40). |
 | backgroundColor | string | '#ffffff' | The background color of the drawer. |
+| setDrawerExpanded | function | null | optional - the drawer will set true/false if the drawer is expanded(start up position) or not. This could be helpful when performing an action when the state of the drawer changes, such as transitions etc. |
 | startUp | bool | true | If **true**, the drawer will start in up position. If **false**, it will start in down position. |
 | roundedEdges | bool | true | If **true**, the top of the drawer will have rounded edges. |
 | shadow | bool | true | if **true**, the top of the drawer will have a shadow. |

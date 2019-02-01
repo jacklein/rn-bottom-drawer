@@ -26,6 +26,11 @@ export default class BottomDrawer extends Component{
     offset: PropTypes.number,
 
     /**
+    * [Optional] sets a boolean value of wether the drawer is expanded up or not
+    */
+    setDrawerExpanded: PropTypes.func,
+
+    /**
      * Set to true to have the drawer start in up position.
      */
     startUp: PropTypes.bool,
@@ -55,6 +60,7 @@ export default class BottomDrawer extends Component{
   static defaultProps = {
     offset: 0,
     startUp: true,
+    setDrawerExpanded: null,
     backgroundColor: '#ffffff',
     roundedEdges: true,
     shadow: true,
@@ -124,12 +130,23 @@ export default class BottomDrawer extends Component{
 
   _handlePanResponderRelease = (e, gesture) => {
     const { currentPosition } = this.state;
-    if (gesture.dy > this.TOGGLE_THRESHOLD && currentPosition === this.UP_POSITION) {
+    const isUp = currentPosition === this.UP_POSITION;
+    const isDown = currentPosition === this.DOWN_POSITION;
+    let isDrawerExpanded = false;
+
+    if (gesture.dy > this.TOGGLE_THRESHOLD && isUp) {
       this.transitionTo(this.DOWN_POSITION);
-    } else if (gesture.dy < -this.TOGGLE_THRESHOLD && currentPosition === this.DOWN_POSITION) {
+      isDrawerExpanded = false;
+    } else if (gesture.dy < -this.TOGGLE_THRESHOLD && isDown) {
       this.transitionTo(this.UP_POSITION);
+      isDrawerExpanded = true;
     } else {
+      isDrawerExpanded = isUp;
       this.resetPosition();
+    }
+
+    if (this.props.setDrawerExpanded) {
+      this.props.setDrawerExpanded(isDrawerExpanded);
     }
   }
 
