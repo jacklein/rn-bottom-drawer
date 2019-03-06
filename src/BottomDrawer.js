@@ -100,6 +100,7 @@ export default class BottomDrawer extends Component{
         style={[
           {...this.position.getLayout(), left: 0 },
           styles.animationContainer,
+          this.props.animationContainerStyles,
           this.props.roundedEdges ? styles.roundedEdges : null,
           this.props.shadow ? styles.shadow : null,
           { height: this.props.containerHeight + Math.sqrt(SCREEN_HEIGHT),
