@@ -63,6 +63,7 @@ export default class App extends React.Component {
 | startUp | bool | true | If **true**, the drawer will start in up position. If **false**, it will start in down position. |
 | roundedEdges | bool | true | If **true**, the top of the drawer will have rounded edges. |
 | shadow | bool | true | if **true**, the top of the drawer will have a shadow. |
+| animationContainerStyles | Object | -- | Animated.View Styles|
 
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
