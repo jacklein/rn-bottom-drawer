@@ -4,7 +4,7 @@ import {
   View,
   PanResponder,
   Animated,
-  Dimensions,
+  Dimensions
 } from 'react-native';
 
 import styles from './styles';
@@ -50,6 +50,21 @@ export default class BottomDrawer extends Component{
      * Set to true to give the drawer a shadow.
      */
     shadow: PropTypes.bool,
+
+    /**
+     * Animated.View Styles
+     */
+    animationContainerStyles: PropTypes.object,
+
+    /*
+     * panResponder disabled then callback run responder func
+     */
+    panResponder: PropTypes.bool,
+
+    /*
+     * disabled panResponder then called.
+     */
+    responder: PropTypes.func
   }
 
   static defaultProps = {
@@ -58,6 +73,7 @@ export default class BottomDrawer extends Component{
     backgroundColor: '#ffffff',
     roundedEdges: true,
     shadow: true,
+    panResponder: true
   }
 
   constructor(props){
@@ -106,10 +122,9 @@ export default class BottomDrawer extends Component{
           { height: this.props.containerHeight + Math.sqrt(SCREEN_HEIGHT),
             backgroundColor: this.props.backgroundColor }
         ]}
-        {...this._panResponder.panHandlers}
+        {...(this.props.panResponder ? this._panResponder.panHandlers : {})}
       >
-        {this.props.children}
-
+        {this.props.panResponder ? this.props.children : this.props.responder(this._panResponder.panHandlers)}
         <View style={{height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor}} />
       </Animated.View>
     )
