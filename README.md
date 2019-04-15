@@ -51,6 +51,7 @@ export default class App extends React.Component {
 }
 
 ```
+[Refer to this code](https://github.com/jacklein/rn-bottom-drawer/issues/7#issuecomment-465554054) if you want to put a **scrollview** within the bottom drawer
 
 ## Configuration
 
