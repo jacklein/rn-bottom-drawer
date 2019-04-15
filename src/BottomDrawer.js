@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { 
   View,
-  PanResponder,
-  Animated,
   Dimensions,
 } from 'react-native';
 
-import styles from './styles';
+import Animator from './Animator';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -50,6 +48,16 @@ export default class BottomDrawer extends Component{
      * Set to true to give the drawer a shadow.
      */
     shadow: PropTypes.bool,
+
+    /**
+     * A callback function triggered when the drawer swiped into up position
+     */
+    onExpanded: PropTypes.func,
+
+    /**
+     * A callback function triggered when the drawer swiped into down position
+     */
+    onCollapsed: PropTypes.func
   }
 
   static defaultProps = {
@@ -58,6 +66,8 @@ export default class BottomDrawer extends Component{
     backgroundColor: '#ffffff',
     roundedEdges: true,
     shadow: true,
+    onExpanded: () => {},
+    onCollapsed: () => {}
   }
 
   constructor(props){
@@ -74,86 +84,49 @@ export default class BottomDrawer extends Component{
      * UP_POSITION and DOWN_POSITION calculate the two (x,y) values for when
      * the drawer is swiped into up position and down position.
      */
-    this.UP_POSITION = { 
-      x: 0, 
-      y: SCREEN_HEIGHT - (this.props.containerHeight + this.props.offset) 
-    };
-    this.DOWN_POSITION = { 
-      x: 0,
-      y: this.UP_POSITION.y + this.DOWN_DISPLAY
-    };
+    this.UP_POSITION = this._calculateUpPosition(SCREEN_HEIGHT, this.props.containerHeight, this.props.offset)
+    this.DOWN_POSITION = this._calculateDownPosition(this.UP_POSITION, this.DOWN_DISPLAY)
 
     this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION };
-
-    this.position = new Animated.ValueXY(this.state.currentPosition);
-
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: this._handlePanResponderMove,
-      onPanResponderRelease: this._handlePanResponderRelease
-    });
   }
 
   render() {   
     return (
-      <Animated.View 
-        style={[
-          {...this.position.getLayout(), left: 0},
-          styles.animationContainer,
-          this.props.roundedEdges ? styles.roundedEdges : null,
-          this.props.shadow ? styles.shadow : null,
-          { height: this.props.containerHeight + Math.sqrt(SCREEN_HEIGHT),
-            backgroundColor: this.props.backgroundColor }
-        ]}
-        {...this._panResponder.panHandlers}
+      <Animator
+        currentPosition = {this.state.currentPosition}
+        setCurrentPosition = {(position) => this.setCurrentPosition(position)}
+        toggleThreshold = {this.TOGGLE_THRESHOLD}
+        upPosition = {this.UP_POSITION}
+        downPosition = {this.DOWN_POSITION}
+        roundedEdges = {this.props.roundedEdges}
+        shadow = {this.props.shadow}
+        containerHeight = {this.props.containerHeight}
+        backgroundColor = {this.props.backgroundColor}
+        onExpanded = {() => this.props.onExpanded()}
+        onCollapsed = {() => this.props.onCollapsed()}
       >
         {this.props.children}
 
         <View style={{height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor}} />
-      </Animated.View>
+      </Animator>
     )
   }
 
-  _handlePanResponderMove = (e, gesture) => {
-    if (this.swipeInBounds(gesture)) {
-      this.position.setValue({ y: this.state.currentPosition.y + gesture.dy });
-    } else {
-      this.position.setValue({ y: this.UP_POSITION.y - this.calculateEase(gesture) });
+  setCurrentPosition(position) {
+    this.setState({ currentPosition: position })
+  }
+
+  _calculateUpPosition(screenHeight, containerHeight, offset) {
+    return {
+      x: 0, 
+      y: screenHeight - (containerHeight + offset) 
     }
   }
 
-  _handlePanResponderRelease = (e, gesture) => {
-    const { currentPosition } = this.state;
-    if (gesture.dy > this.TOGGLE_THRESHOLD && currentPosition === this.UP_POSITION) {
-      this.transitionTo(this.DOWN_POSITION);
-    } else if (gesture.dy < -this.TOGGLE_THRESHOLD && currentPosition === this.DOWN_POSITION) {
-      this.transitionTo(this.UP_POSITION);
-    } else {
-      this.resetPosition();
-    }
-  }
-
-  // returns true if the swipe is within the height of the drawer.
-  swipeInBounds(gesture) {
-    return this.state.currentPosition.y + gesture.dy > this.UP_POSITION.y;
-  }
-
-  // when the user swipes the drawer above its height, this calculates
-  // the drawer's slowing upward ease.
-  calculateEase(gesture) {
-    return Math.min(Math.sqrt(gesture.dy * -1), Math.sqrt(SCREEN_HEIGHT));
-  }
-
-  transitionTo(position) {
-    Animated.spring(this.position, {
-      toValue: position
-    }).start();
-    this.setState({ currentPosition: position });
-  }
-
-  resetPosition() {
-    Animated.spring(this.position, {
-      toValue: this.state.currentPosition
-    }).start();
+  _calculateDownPosition(upPosition, downDisplay) {
+    return { 
+      x: 0,
+      y: upPosition.y + downDisplay
+    };
   }
 }
