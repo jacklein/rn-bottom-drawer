@@ -98,7 +98,7 @@ export default class BottomDrawer extends Component{
     return (
       <Animated.View 
         style={[
-          this.position.getLayout(),
+          {...this.position.getLayout(), left: 0},
           styles.animationContainer,
           this.props.roundedEdges ? styles.roundedEdges : null,
           this.props.shadow ? styles.shadow : null,
