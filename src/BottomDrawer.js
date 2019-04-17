@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
   View,
   Dimensions,
+  Animated
 } from 'react-native';
 
 import Animator from './Animator';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const DOWN_STATE = 0
+const UP_STATE = 1
 
-export default class BottomDrawer extends Component{
+export default class BottomDrawer extends Component {
   static propTypes = {
     /**
      * Height of the drawer. 
@@ -57,7 +60,12 @@ export default class BottomDrawer extends Component{
     /**
      * A callback function triggered when the drawer swiped into down position
      */
-    onCollapsed: PropTypes.func
+    onCollapsed: PropTypes.func,
+    
+    /*
+     * An state for changing and toggling drawer 
+     */
+    drawerState: PropTypes.number
   }
 
   static defaultProps = {
@@ -66,11 +74,12 @@ export default class BottomDrawer extends Component{
     backgroundColor: '#ffffff',
     roundedEdges: true,
     shadow: true,
-    onExpanded: () => {},
-    onCollapsed: () => {}
+    onExpanded: () => { },
+    onCollapsed: () => { },
+    drawerState: DOWN_STATE
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     /**
@@ -87,27 +96,35 @@ export default class BottomDrawer extends Component{
     this.UP_POSITION = this._calculateUpPosition(SCREEN_HEIGHT, this.props.containerHeight, this.props.offset)
     this.DOWN_POSITION = this._calculateDownPosition(this.UP_POSITION, this.DOWN_DISPLAY)
 
-    this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION };
+    this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION , currentState: this.props.startUp ? UP_STATE : DOWN_STATE };
+
   }
 
-  render() {   
+  toggleDrawerState(){
+    this.setState({
+      currentState: this.state.currentState === UP_STATE ? DOWN_STATE : UP_STATE
+    })
+  }
+
+  render() {
     return (
       <Animator
-        currentPosition = {this.state.currentPosition}
-        setCurrentPosition = {(position) => this.setCurrentPosition(position)}
-        toggleThreshold = {this.TOGGLE_THRESHOLD}
-        upPosition = {this.UP_POSITION}
-        downPosition = {this.DOWN_POSITION}
-        roundedEdges = {this.props.roundedEdges}
-        shadow = {this.props.shadow}
-        containerHeight = {this.props.containerHeight}
-        backgroundColor = {this.props.backgroundColor}
-        onExpanded = {() => this.props.onExpanded()}
-        onCollapsed = {() => this.props.onCollapsed()}
+        currentPosition={this.state.currentPosition}
+        setCurrentPosition={(position) => this.setCurrentPosition(position)}
+        toggleThreshold={this.TOGGLE_THRESHOLD}
+        upPosition={this.UP_POSITION}
+        downPosition={this.DOWN_POSITION}
+        roundedEdges={this.props.roundedEdges}
+        shadow={this.props.shadow}
+        containerHeight={this.props.containerHeight}
+        backgroundColor={this.props.backgroundColor}
+        onExpanded={() => this.props.onExpanded()}
+        onCollapsed={() => this.props.onCollapsed()}
+        drawerState={this.state.currentState}
       >
         {this.props.children}
 
-        <View style={{height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor}} />
+        <View style={{ height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor }} />
       </Animator>
     )
   }
@@ -118,13 +135,13 @@ export default class BottomDrawer extends Component{
 
   _calculateUpPosition(screenHeight, containerHeight, offset) {
     return {
-      x: 0, 
-      y: screenHeight - (containerHeight + offset) 
+      x: 0,
+      y: screenHeight - (containerHeight + offset)
     }
   }
 
   _calculateDownPosition(upPosition, downDisplay) {
-    return { 
+    return {
       x: 0,
       y: upPosition.y + downDisplay
     };
