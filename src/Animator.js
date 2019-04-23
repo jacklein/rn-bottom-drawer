@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { 
+import {
   PanResponder,
   Animated,
   Dimensions,
   StyleSheet
 } from 'react-native';
+import { DOWN_STATE, UP_STATE } from './BottomDrawer';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default class Animator extends Component{
-  constructor(props){
+export default class Animator extends Component {
+  constructor(props) {
     super(props);
-    
+
     this.position = new Animated.ValueXY(this.props.currentPosition);
 
     this._panResponder = PanResponder.create({
@@ -22,12 +23,12 @@ export default class Animator extends Component{
     });
   }
 
-  componentWillReceiveProps(nextProps){
-    if( nextProps.drawerState !== this.props.drawerState ) {
-      if(nextProps.drawerState === 0) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.drawerState !== this.props.drawerState) {
+      if (nextProps.drawerState === 0) {
         this._transitionTo(this.props.downPosition, this.props.onCollapsed);
       }
-      if(nextProps.drawerState === 1) {
+      if (nextProps.drawerState === 1) {
         this._transitionTo(this.props.upPosition, this.props.onExpanded);
       }
     }
@@ -35,9 +36,9 @@ export default class Animator extends Component{
 
   render() {
     return (
-      <Animated.View 
+      <Animated.View
         style={[
-          {...this.position.getLayout(), left: 0},
+          { ...this.position.getLayout(), left: 0 },
           StyleSheet.flatten([
             styles.animationContainer(this.props.containerHeight, this.props.backgroundColor),
             styles.roundedEdges(this.props.roundedEdges),
@@ -62,8 +63,10 @@ export default class Animator extends Component{
   _handlePanResponderRelease = (e, gesture) => {
     if (gesture.dy > this.props.toggleThreshold && this.props.currentPosition === this.props.upPosition) {
       this._transitionTo(this.props.downPosition, this.props.onCollapsed);
+      this.props.onDrawerStateSet(DOWN_STATE);
     } else if (gesture.dy < -this.props.toggleThreshold && this.props.currentPosition === this.props.downPosition) {
       this._transitionTo(this.props.upPosition, this.props.onExpanded);
+      this.props.onDrawerStateSet(UP_STATE);
     } else {
       this._resetPosition();
     }
@@ -82,7 +85,7 @@ export default class Animator extends Component{
     Animated.spring(this.position, {
       toValue: position
     }).start(() => this.props.onExpanded());
-    
+
     this.props.setCurrentPosition(position);
     callback();
   }
