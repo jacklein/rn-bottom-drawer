@@ -61,7 +61,7 @@ export default class BottomDrawer extends Component {
      * A callback function triggered when the drawer swiped into down position
      */
     onCollapsed: PropTypes.func,
-    
+
     /*
      * An state for changing and toggling drawer 
      */
@@ -96,13 +96,25 @@ export default class BottomDrawer extends Component {
     this.UP_POSITION = this._calculateUpPosition(SCREEN_HEIGHT, this.props.containerHeight, this.props.offset)
     this.DOWN_POSITION = this._calculateDownPosition(this.UP_POSITION, this.DOWN_DISPLAY)
 
-    this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION , currentState: this.props.startUp ? UP_STATE : DOWN_STATE };
+    this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION, currentState: this.props.startUp ? UP_STATE : DOWN_STATE };
 
   }
 
-  toggleDrawerState(){
+  toggleDrawerState() {
     this.setState({
       currentState: this.state.currentState === UP_STATE ? DOWN_STATE : UP_STATE
+    })
+  }
+
+  openBottomDrawer() {
+    this.setState({
+      currentState: UPSTATE
+    })
+  }
+
+  closeBottomDrawer() {
+    this.setState({
+      currentState: DOWN_STATE
     })
   }
 
