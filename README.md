@@ -6,10 +6,12 @@
 
 ## Content
 
-- [Installation](#installation)
-- [Usage example](#usage-example)
-- [Configuration](#configuration)
-- [Questions?](#questions)
+- [Bottom drawer for React Native](#bottom-drawer-for-react-native)
+  - [Content](#content)
+  - [Installation](#installation)
+  - [Usage Example](#usage-example)
+  - [Configuration](#configuration)
+    - [Questions?](#questions)
 
 ## Installation
 
@@ -67,5 +69,9 @@ export default class App extends React.Component {
 | onExpanded | func | -- | A callback function triggered when the drawer is swiped into up position |
 | onCollapsed | func | -- | A callback function triggered when the drawer is swiped into down position |
 
+| Method  | Description |
+| ---- | ---- | ----| ---- |
+| toggleDrawerState() | Open/Close drawer based on previous state   |
 ### Questions?
-Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
+Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)   
+Feel free to contact me at [zadehdolatabad@gmail.com](mailto:zadehdolatabad@gmail.com) 
