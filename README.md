@@ -74,3 +74,4 @@ export default class App extends React.Component {
 | toggleDrawerState() | Open/Close drawer based on previous state   |
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
+Feel free to contact me at [zadehdolatabad@gmail.com](mailto:zadehdolatabad@gmail.com) 
