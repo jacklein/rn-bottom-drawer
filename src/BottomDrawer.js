@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { 
   View,
   Dimensions,
+  ViewPropTypes
 } from 'react-native';
 
 import Animator from './Animator';
@@ -48,6 +49,11 @@ export default class BottomDrawer extends Component{
      * Set to true to give the drawer a shadow.
      */
     shadow: PropTypes.bool,
+
+    /**
+     * Extend panel style
+     */
+    panelStyles: ViewPropTypes.style,
 
     /**
      * A callback function triggered when the drawer swiped into up position
@@ -104,6 +110,7 @@ export default class BottomDrawer extends Component{
         backgroundColor = {this.props.backgroundColor}
         onExpanded = {() => this.props.onExpanded()}
         onCollapsed = {() => this.props.onCollapsed()}
+        panelStyles = {this.props.panelStyles}
       >
         {this.props.children}
 
