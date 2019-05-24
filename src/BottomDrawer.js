@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { 
   View,
   Dimensions,
+  ViewPropTypes
 } from 'react-native';
 
 import Animator from './Animator';
@@ -50,6 +51,11 @@ export default class BottomDrawer extends Component{
     shadow: PropTypes.bool,
 
     /**
+     * Extend panel style
+     */
+    panelStyles: ViewPropTypes.style,
+
+    /**
      * A callback function triggered when the drawer swiped into up position
      */
     onExpanded: PropTypes.func,
@@ -93,6 +99,7 @@ export default class BottomDrawer extends Component{
   render() {   
     return (
       <Animator
+        ref={(ref) => this._animator = ref}
         currentPosition = {this.state.currentPosition}
         setCurrentPosition = {(position) => this.setCurrentPosition(position)}
         toggleThreshold = {this.TOGGLE_THRESHOLD}
@@ -104,6 +111,9 @@ export default class BottomDrawer extends Component{
         backgroundColor = {this.props.backgroundColor}
         onExpanded = {() => this.props.onExpanded()}
         onCollapsed = {() => this.props.onCollapsed()}
+        panelStyles = {this.props.panelStyles}
+        open={this.props.open}
+        close={this.props.close}
       >
         {this.props.children}
 
@@ -128,5 +138,13 @@ export default class BottomDrawer extends Component{
       x: 0,
       y: upPosition.y + downDisplay
     };
+  }
+
+  open() {
+    this._animator._transitionTo(this.UP_POSITION, this.props.onExpanded)
+  }
+
+  close() {
+    this._animator._transitionTo(this.DOWN_POSITION, this.props.onCollapsed)
   }
 }

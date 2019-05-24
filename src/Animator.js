@@ -30,7 +30,8 @@ export default class Animator extends Component{
           StyleSheet.flatten([
             styles.animationContainer(this.props.containerHeight, this.props.backgroundColor),
             styles.roundedEdges(this.props.roundedEdges),
-            styles.shadow(this.props.shadow)
+            styles.shadow(this.props.shadow),
+            this.props.panelStyles
           ])
         ]}
         {...this._panResponder.panHandlers}
