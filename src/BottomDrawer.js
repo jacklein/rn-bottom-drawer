@@ -99,6 +99,7 @@ export default class BottomDrawer extends Component{
   render() {   
     return (
       <Animator
+        ref={(ref) => this._animator = ref}
         currentPosition = {this.state.currentPosition}
         setCurrentPosition = {(position) => this.setCurrentPosition(position)}
         toggleThreshold = {this.TOGGLE_THRESHOLD}
@@ -111,6 +112,8 @@ export default class BottomDrawer extends Component{
         onExpanded = {() => this.props.onExpanded()}
         onCollapsed = {() => this.props.onCollapsed()}
         panelStyles = {this.props.panelStyles}
+        open={this.props.open}
+        close={this.props.close}
       >
         {this.props.children}
 
@@ -135,5 +138,13 @@ export default class BottomDrawer extends Component{
       x: 0,
       y: upPosition.y + downDisplay
     };
+  }
+
+  open() {
+    this._animator._transitionTo(this.UP_POSITION)
+  }
+
+  close() {
+    this._animator._transitionTo(this.DOWN_POSITION)
   }
 }
