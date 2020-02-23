@@ -51,10 +51,13 @@ export default class Animator extends Component{
   _handlePanResponderRelease = (e, gesture) => {
     if (gesture.dy > this.props.toggleThreshold && this.props.currentPosition === this.props.upPosition) {
       this._transitionTo(this.props.downPosition, this.props.onCollapsed);
+      console.log('collapsed')
     } else if (gesture.dy < -this.props.toggleThreshold && this.props.currentPosition === this.props.downPosition) {
       this._transitionTo(this.props.upPosition, this.props.onExpanded);
+      console.log('expanded')
     } else {
       this._resetPosition();
+      console.log('reset')
     }
   }
 
