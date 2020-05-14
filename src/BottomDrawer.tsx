@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import { View, Dimensions, Animated } from "react-native";
 
-import Animator from "./Animator";
-
+import Animator, { DOWN_STATE, UP_STATE, ICurrentPosition } from "./Animator";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
-export const DOWN_STATE = 0;
-export const UP_STATE = 1;
+
 
 type IState = {
   currentPosition: ICurrentPosition;
   currentState: number;
 };
 
-export type ICurrentPosition = {
-  x: number;
-  y: number;
-};
 
 type IBottomDrawer = {
   /**
