@@ -101,7 +101,7 @@ const Animator: React.FC<IAnimator> = ({ ...props }) => {
 
   const _transitionTo = (position: ICurrentPosition, callback: () => any) => {
     // @ts-ignore
-    Animated.spring(position, {
+    Animated.spring(new Animated.ValueXY(position), {
       toValue: position,
     }).start(() => props.onExpanded());
 
@@ -110,7 +110,7 @@ const Animator: React.FC<IAnimator> = ({ ...props }) => {
   };
 
   const _resetPosition = () => {
-    Animated.spring(position, {
+    Animated.spring(new Animated.ValueXY(position), {
       toValue: props.currentPosition,
     }).start();
   };
