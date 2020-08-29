@@ -42,9 +42,9 @@ export default class Animator extends Component{
 
   _handlePanResponderMove = (e, gesture) => {
     if (this._swipeInBounds(gesture)) {
-      this.position.setValue({ y: this.props.currentPosition.y + gesture.dy });
+      this.position.setValue({ x: 0, y: this.props.currentPosition.y + gesture.dy });
     } else {
-      this.position.setValue({ y: this.props.upPosition.y - this._calculateEase(gesture) });
+      this.position.setValue({ x: 0, y: this.props.upPosition.y - this._calculateEase(gesture) });
     }
   }
 
