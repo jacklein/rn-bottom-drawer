@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
   View,
   Dimensions,
 } from 'react-native';
@@ -12,13 +12,13 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 export default class BottomDrawer extends Component{
   static propTypes = {
     /**
-     * Height of the drawer. 
+     * Height of the drawer.
      */
     containerHeight: PropTypes.number.isRequired,
 
     /**
      * The amount of offset to apply to the drawer's position.
-     * If the app uses a header and tab navigation, offset should equal 
+     * If the app uses a header and tab navigation, offset should equal
      * the sum of those two components' heights.
      */
     offset: PropTypes.number,
@@ -29,7 +29,7 @@ export default class BottomDrawer extends Component{
     startUp: PropTypes.bool,
 
     /**
-     * How much the drawer's down display falls beneath the up display. 
+     * How much the drawer's down display falls beneath the up display.
      * Ex: if set to 20, the down display will be 20 points underneath the up display.
      */
     downDisplay: PropTypes.number,
@@ -57,13 +57,44 @@ export default class BottomDrawer extends Component{
     /**
      * A callback function triggered when the drawer swiped into down position
      */
-    onCollapsed: PropTypes.func
+    onCollapsed: PropTypes.func,
+
+    /**
+     * Set bottom left border raidus
+     */
+    borderBottomLeftRadius: PropTypes.number,
+
+    /**
+     * Set bottom right border raidus
+     */
+    borderBottomRightRadius: PropTypes.number,
+
+    /**
+     * Set border raidus
+     */
+    borderRadius: PropTypes.number,
+
+    /**
+     * Set top left border raidus
+     */
+    borderTopLeftRadius: PropTypes.number,
+
+    /**
+     * Set top right border raidus
+     */
+    borderTopRightRadius: PropTypes.number,
+
   }
 
   static defaultProps = {
     offset: 0,
     startUp: true,
     backgroundColor: '#ffffff',
+    borderRadius: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     roundedEdges: true,
     shadow: true,
     onExpanded: () => {},
@@ -90,25 +121,34 @@ export default class BottomDrawer extends Component{
     this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION };
   }
 
-  render() {   
+  render() {
     return (
-      <Animator
-        currentPosition = {this.state.currentPosition}
-        setCurrentPosition = {(position) => this.setCurrentPosition(position)}
-        toggleThreshold = {this.TOGGLE_THRESHOLD}
-        upPosition = {this.UP_POSITION}
-        downPosition = {this.DOWN_POSITION}
-        roundedEdges = {this.props.roundedEdges}
-        shadow = {this.props.shadow}
-        containerHeight = {this.props.containerHeight}
-        backgroundColor = {this.props.backgroundColor}
-        onExpanded = {() => this.props.onExpanded()}
-        onCollapsed = {() => this.props.onCollapsed()}
-      >
-        {this.props.children}
+        <Animator
+            currentPosition = {this.state.currentPosition}
+            setCurrentPosition = {(position) => this.setCurrentPosition(position)}
+            toggleThreshold = {this.TOGGLE_THRESHOLD}
+            upPosition = {this.UP_POSITION}
+            downPosition = {this.DOWN_POSITION}
+            roundedEdges = {this.props.roundedEdges}
+            shadow = {this.props.shadow}
+            containerHeight = {this.props.containerHeight}
+            backgroundColor = {this.props.backgroundColor}
+            onExpanded = {() => this.props.onExpanded()}
+            onCollapsed = {() => this.props.onCollapsed()}
+        >
+          {this.props.children}
 
-        <View style={{height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor}} />
-      </Animator>
+          <View style={{height: Math.sqrt(SCREEN_HEIGHT),
+            backgroundColor: this.props.backgroundColor,
+            borderRadius: this.props.borderRadius,
+            borderBottomLeftRadius: this.props.borderBottomLeftRadius,
+            borderBottomRightRadius: this.props.borderBottomRightRadius,
+            borderTopLeftRadius: this.props.borderTopLeftRadius,
+            borderTopRightRadius: this.props.borderTopRightRadius,
+          }}
+
+          />
+        </Animator>
     )
   }
 
@@ -118,13 +158,13 @@ export default class BottomDrawer extends Component{
 
   _calculateUpPosition(screenHeight, containerHeight, offset) {
     return {
-      x: 0, 
-      y: screenHeight - (containerHeight + offset) 
+      x: 0,
+      y: screenHeight - (containerHeight + offset)
     }
   }
 
   _calculateDownPosition(upPosition, downDisplay) {
-    return { 
+    return {
       x: 0,
       y: upPosition.y + downDisplay
     };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { 
+import {
   PanResponder,
   Animated,
   Dimensions,
@@ -12,7 +12,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default class Animator extends Component{
   constructor(props){
     super(props);
-    
+
     this.position = new Animated.ValueXY(this.props.currentPosition);
 
     this._panResponder = PanResponder.create({
@@ -24,27 +24,27 @@ export default class Animator extends Component{
 
   render() {
     return (
-      <Animated.View 
-        style={[
-          {...this.position.getLayout(), left: 0},
-          StyleSheet.flatten([
-            styles.animationContainer(this.props.containerHeight, this.props.backgroundColor),
-            styles.roundedEdges(this.props.roundedEdges),
-            styles.shadow(this.props.shadow)
-          ])
-        ]}
-        {...this._panResponder.panHandlers}
-      >
-        {this.props.children}
-      </Animated.View>
+        <Animated.View
+            style={[
+              {...this.position.getLayout(), left: 0},
+              StyleSheet.flatten([
+                styles.animationContainer(this.props.containerHeight, this.props.backgroundColor),
+                styles.roundedEdges(this.props.roundedEdges),
+                styles.shadow(this.props.shadow),
+              ])
+            ]}
+            {...this._panResponder.panHandlers}
+        >
+          {this.props.children}
+        </Animated.View>
     )
   }
 
   _handlePanResponderMove = (e, gesture) => {
     if (this._swipeInBounds(gesture)) {
-      this.position.setValue({ y: this.props.currentPosition.y + gesture.dy });
+      this.position.setValue({x: 0, y: this.props.currentPosition.y + gesture.dy });
     } else {
-      this.position.setValue({ y: this.props.upPosition.y - this._calculateEase(gesture) });
+      this.position.setValue({x: 0, y: this.props.upPosition.y - this._calculateEase(gesture) });
     }
   }
 
@@ -69,16 +69,18 @@ export default class Animator extends Component{
 
   _transitionTo(position, callback) {
     Animated.spring(this.position, {
-      toValue: position
+      toValue: position,
+      useNativeDriver: false,
     }).start(() => this.props.onExpanded());
-    
+
     this.props.setCurrentPosition(position);
     callback();
   }
 
   _resetPosition() {
     Animated.spring(this.position, {
-      toValue: this.props.currentPosition
+      toValue: this.props.currentPosition,
+      useNativeDriver: false
     }).start();
   }
 }
@@ -91,13 +93,13 @@ const styles = {
     backgroundColor: color,
   }),
   roundedEdges: rounded => {
-    return rounded == true && {
+    return rounded === true && {
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
     }
   },
   shadow: shadow => {
-    return shadow == true && {
+    return shadow === true && {
       shadowColor: '#CECDCD',
       shadowRadius: 3,
       shadowOpacity: 5,
