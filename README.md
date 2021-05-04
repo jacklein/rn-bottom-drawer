@@ -25,7 +25,7 @@ npm install react-native-bottom-drawer-jyn --save
 ```javascript
 import React from 'react';
 import { View, Text } from 'react-native';
-import BottomDrawer from 'rn-bottom-drawer';
+import BottomDrawer from 'react-native-bottom-drawer-view';
 
 const TAB_BAR_HEIGHT = 49;
 
