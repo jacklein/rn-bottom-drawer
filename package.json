@@ -1,5 +1,5 @@
 {
-  "name": "react-native-bottom-drawer-jyn",
+  "name": "react-native-bottom-drawer-view",
   "version": "1.0.0",
   "description": "a bottom drawer component for react native",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jynlele/rn-bottom-drawer.git"
+    "url": "git+https://github.com/jynlele/rn-bottom-drawer.git"
   },
   "keywords": [
     "react-native",
@@ -27,5 +27,8 @@
     "metro-react-native-babel-preset": "^0.51.0",
     "react": "^16.6.3",
     "react-native": "^0.57.8"
+  },
+  "directories": {
+    "example": "example"
   }
 }
