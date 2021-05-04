@@ -13,10 +13,10 @@
 
 ## Installation
 
-Install `react-native-bottom-drawer-jyn`.
+Install `react-native-bottom-drawer-view`.
 
 ```
-npm install react-native-bottom-drawer-jyn --save
+npm install react-native-bottom-drawer-view --save
 ```
 
 ## Usage Example
