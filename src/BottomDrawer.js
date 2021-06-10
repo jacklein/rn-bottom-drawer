@@ -83,6 +83,10 @@ export default class BottomDrawer extends Component{
      * Set top right border raidus
      */
     borderTopRightRadius: PropTypes.number,
+    /**
+     * Set all the way down positon
+     */
+    alldownDisplay: PropTypes.number,
 
   }
 
@@ -98,7 +102,8 @@ export default class BottomDrawer extends Component{
     roundedEdges: true,
     shadow: true,
     onExpanded: () => {},
-    onCollapsed: () => {}
+    onCollapsed: () => {},
+    alldownDisplay: 0
   }
 
   constructor(props){
@@ -117,6 +122,7 @@ export default class BottomDrawer extends Component{
      */
     this.UP_POSITION = this._calculateUpPosition(SCREEN_HEIGHT, this.props.containerHeight, this.props.offset)
     this.DOWN_POSITION = this._calculateDownPosition(this.UP_POSITION, this.DOWN_DISPLAY)
+    this.ALL_DOWN_POSITION = {x:0, y:this.props.alldownDisplay}
 
     this.state = { currentPosition: this.props.startUp ? this.UP_POSITION : this.DOWN_POSITION };
   }
@@ -135,6 +141,7 @@ export default class BottomDrawer extends Component{
             backgroundColor = {this.props.backgroundColor}
             onExpanded = {() => this.props.onExpanded()}
             onCollapsed = {() => this.props.onCollapsed()}
+            alldownPosition = {this.ALL_DOWN_POSITION}
         >
           {this.props.children}
 

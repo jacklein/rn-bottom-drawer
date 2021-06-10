@@ -53,7 +53,18 @@ export default class Animator extends Component{
       this._transitionTo(this.props.downPosition, this.props.onCollapsed);
     } else if (gesture.dy < -this.props.toggleThreshold && this.props.currentPosition === this.props.downPosition) {
       this._transitionTo(this.props.upPosition, this.props.onExpanded);
-    } else {
+    }else if(gesture.dy > this.props.toggleThreshold && this.props.currentPosition === this.props.downPosition){
+      if(!this.props.downPosition){
+        return
+      }
+      this._transitionTo(this.props.alldownPosition, this.props.onCollapsed);
+    }else if(gesture.dy < -this.props.toggleThreshold && this.props.currentPosition === this.props.alldownPosition){
+      if(!this.props.downPosition){
+        return
+      }
+      this._transitionTo(this.props.downPosition, this.props.onCollapsed);
+    }
+    else {
       this._resetPosition();
     }
   }
@@ -71,7 +82,7 @@ export default class Animator extends Component{
     Animated.spring(this.position, {
       toValue: position,
       useNativeDriver: false,
-    }).start();
+    }).start();44
 
     this.props.setCurrentPosition(position);
     callback();
