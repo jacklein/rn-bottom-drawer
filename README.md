@@ -13,10 +13,10 @@
 
 ## Installation
 
-Install `rn-bottom-drawer`.
+Install `react-native-bottom-drawer-view`.
 
 ```
-npm install rn-bottom-drawer --save
+npm install react-native-bottom-drawer-view --save
 ```
 
 ## Usage Example
@@ -25,29 +25,29 @@ npm install rn-bottom-drawer --save
 ```javascript
 import React from 'react';
 import { View, Text } from 'react-native';
-import BottomDrawer from 'rn-bottom-drawer';
+import BottomDrawer from 'react-native-bottom-drawer-view';
 
 const TAB_BAR_HEIGHT = 49;
 
 export default class App extends React.Component {
-  renderContent = () => {
-    return (
-      <View>
-        <Text>Get directions to your location</Text>
-      </View>
-    )
-  }
+    renderContent = () => {
+        return (
+            <View>
+                <Text>Get directions to your location</Text>
+            </View>
+        )
+    }
 
-  render() {
-    return (
-      <BottomDrawer
-        containerHeight={100}
-        offset={TAB_BAR_HEIGHT}
-      >
-        {this.renderContent()}
-      </BottomDrawer>
-    )
-  }
+    render() {
+        return (
+            <BottomDrawer
+                containerHeight={100}
+                offset={TAB_BAR_HEIGHT}
+            >
+                {this.renderContent()}
+            </BottomDrawer>
+        )
+    }
 }
 
 ```
@@ -66,6 +66,11 @@ export default class App extends React.Component {
 | shadow | bool | true | if **true**, the top of the drawer will have a shadow. |
 | onExpanded | func | -- | A callback function triggered when the drawer is swiped into up position |
 | onCollapsed | func | -- | A callback function triggered when the drawer is swiped into down position |
+| borderRadius | number | 0 |A number of border radius |
+| borderBottomLeftRadius | number | 0 | A number of bottom left border radius |
+| borderBottomRightRadius | number | 0 | A number of bottom right border radius |
+| borderTopLeftRadius | number | 0 | A number of top left border radius |
+| borderTopRightRadius | number | 0 | A number of top right border radius |
 
 ### Questions?
 Feel free to contact me at [jackdillklein@gmail.com](mailto:jackdillklein@gmail.com) or [create an issue](https://github.com/jacklein/rn-bottom-drawer/issues/new)
