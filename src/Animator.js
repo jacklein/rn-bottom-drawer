@@ -42,9 +42,9 @@ export default class Animator extends Component{
 
   _handlePanResponderMove = (e, gesture) => {
     if (this._swipeInBounds(gesture)) {
-      this.position.setValue({ y: this.props.currentPosition.y + gesture.dy });
+      this.position.setValue({ ...this.position,y: this.props.currentPosition.y + gesture.dy });
     } else {
-      this.position.setValue({ y: this.props.upPosition.y - this._calculateEase(gesture) });
+      this.position.setValue({ ...this.position, y: this.props.upPosition.y - this._calculateEase(gesture) });      
     }
   }
 
@@ -69,7 +69,8 @@ export default class Animator extends Component{
 
   _transitionTo(position, callback) {
     Animated.spring(this.position, {
-      toValue: position
+      toValue: position,
+      useNativeDriver: false
     }).start(() => this.props.onExpanded());
     
     this.props.setCurrentPosition(position);
@@ -78,7 +79,8 @@ export default class Animator extends Component{
 
   _resetPosition() {
     Animated.spring(this.position, {
-      toValue: this.props.currentPosition
+      toValue: this.props.currentPosition,
+      useNativeDriver: false
     }).start();
   }
 }
